@@ -1,0 +1,85 @@
+<!-- File: app/src/main/res/values-zh/strings.xml -->
+<resources>
+    <string name="app_name">FitPath</string>
+
+    <string name="tab_today">今日计划</string>
+    <string name="tab_weight">体重</string>
+    <string name="tab_trends">趋势</string>
+    <string name="tab_settings">设置</string>
+
+    <string name="onboarding_title">创建你的计划</string>
+    <string name="current_weight">当前体重（kg）</string>
+    <string name="target_weight">目标体重（kg）</string>
+    <string name="age_years">年龄（可选）</string>
+    <string name="sex">性别（可选）</string>
+    <string name="activity_level">活动水平</string>
+    <string name="food_preference">饮食偏好</string>
+    <string name="continue_btn">继续</string>
+    <string name="edit_profile">编辑资料</string>
+
+    <string name="today_title">今日计划</string>
+    <string name="calorie_range">热量范围</string>
+    <string name="macro_ranges">宏量范围</string>
+    <string name="carbs">碳水</string>
+    <string name="protein">蛋白质</string>
+    <string name="fat">脂肪</string>
+    <string name="breakfast">早餐</string>
+    <string name="lunch">午餐</string>
+    <string name="dinner">晚餐</string>
+    <string name="swap">替换</string>
+    <string name="workout">训练</string>
+    <string name="workout_done">标记完成</string>
+    <string name="workout_undone">撤销完成</string>
+    <string name="safety_note">本应用不提供医疗建议。如有不适请立即停止并咨询专业人士。</string>
+
+    <string name="weight_log_title">体重记录</string>
+    <string name="add_entry">新增记录</string>
+    <string name="date">日期</string>
+    <string name="weight_kg">体重（kg）</string>
+    <string name="save">保存</string>
+    <string name="cancel">取消</string>
+    <string name="delete">删除</string>
+    <string name="edit">编辑</string>
+
+    <string name="trends_title">趋势</string>
+    <string name="last_7_days">近 7 天</string>
+    <string name="last_30_days">近 30 天</string>
+
+    <string name="settings_title">设置</string>
+    <string name="theme">主题</string>
+    <string name="theme_system">跟随系统</string>
+    <string name="theme_light">浅色</string>
+    <string name="theme_dark">深色</string>
+
+    <string name="language">语言</string>
+    <string name="language_system">跟随系统</string>
+    <string name="language_en">English</string>
+    <string name="language_zh">中文</string>
+
+    <string name="reminders">温和提醒</string>
+    <string name="reminders_desc">每天一次，提醒你记录体重或查看计划。</string>
+
+    <string name="export_data">导出数据</string>
+    <string name="delete_data">清空所有数据</string>
+    <string name="delete_data_confirm">确定清空本地所有数据吗？此操作不可撤销。</string>
+    <string name="ok">确定</string>
+
+    <string name="error_invalid_input">无法为这些输入生成安全计划，请调整目标或咨询专业人士。</string>
+
+    <string name="sex_unspecified">不填写</string>
+    <string name="sex_male">男</string>
+    <string name="sex_female">女</string>
+
+    <string name="activity_sedentary">久坐</string>
+    <string name="activity_light">轻度活动</string>
+    <string name="activity_moderate">中度活动</string>
+    <string name="activity_active">高活动</string>
+    <string name="activity_very_active">超高活动</string>
+
+    <string name="pref_none">无偏好</string>
+    <string name="pref_vegetarian">素食</string>
+    <string name="pref_halal">清真</string>
+    <string name="pref_no_beef">不吃牛</string>
+    <string name="pref_no_pork">不吃猪</string>
+    <string name="pref_high_protein">高蛋白</string>
+</resources>
