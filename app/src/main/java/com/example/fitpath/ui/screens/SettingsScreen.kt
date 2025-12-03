@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/ui/screens/SettingsScreen.kt
+// File: app/src/main/java/com/example/fitpath/ui/screens/SettingsScreen.kt
 @file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 package com.example.fitpath.ui.screens
 
@@ -17,7 +17,6 @@ import com.example.fitpath.R
 import com.example.fitpath.domain.model.LanguageMode
 import com.example.fitpath.domain.model.ThemeMode
 import com.example.fitpath.ui.vm.AppViewModel
-
 
 @Composable
 fun SettingsScreen(vm: AppViewModel) {

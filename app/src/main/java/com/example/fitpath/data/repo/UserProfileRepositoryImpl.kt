@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/data/repo/UserProfileRepositoryImpl.kt
+// File: app/src/main/java/com/example/fitpath/data/repo/UserProfileRepositoryImpl.kt
 package com.example.fitpath.data.repo
 
 import com.example.fitpath.data.prefs.UserDataStore
@@ -29,7 +29,8 @@ class UserProfileRepositoryImpl(
                     activityLevel = snap.activityLevel,
                     foodPreference = snap.foodPreference,
                     sex = snap.sex,
-                    ageYears = snap.ageYears
+                    ageYears = snap.ageYears,
+                    heightCm = snap.heightCm // [新增]
                 )
             }
             .launchIn(scope)
@@ -42,7 +43,8 @@ class UserProfileRepositoryImpl(
             activityLevel = profile.activityLevel,
             foodPreference = profile.foodPreference,
             sex = profile.sex,
-            ageYears = profile.ageYears
+            ageYears = profile.ageYears,
+            heightCm = profile.heightCm // [新增]
         )
     }
 

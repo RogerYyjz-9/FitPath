@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/domain/model/Enums.kt
+// File: app/src/main/java/com/example/fitpath/domain/model/Enums.kt
 package com.example.fitpath.domain.model
 
 enum class ThemeMode { SYSTEM, LIGHT, DARK }

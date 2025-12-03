@@ -1,8 +1,10 @@
-// File: app/src/main/java/com/fitpath/ui/screens/OnboardingScreen.kt
+// File: app/src/main/java/com/example/fitpath/ui/screens/OnboardingScreen.kt
 package com.example.fitpath.ui.screens
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -27,9 +29,14 @@ fun OnboardingScreen(
     var pref by remember(profile.foodPreference) { mutableStateOf(profile.foodPreference) }
     var sex by remember(profile.sex) { mutableStateOf(profile.sex) }
     var age by remember(profile.ageYears) { mutableStateOf(profile.ageYears?.toString() ?: "") }
+    // [新增] 身高状态
+    var height by remember(profile.heightCm) { mutableStateOf(profile.heightCm?.toString() ?: "") }
 
     Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
         Text(text = stringResource(R.string.onboarding_title), style = MaterialTheme.typography.headlineSmall)
@@ -81,7 +88,16 @@ fun OnboardingScreen(
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
         )
 
-        Spacer(Modifier.weight(1f))
+        // [新增] 身高输入框
+        OutlinedTextField(
+            modifier = Modifier.fillMaxWidth(),
+            value = height,
+            onValueChange = { height = it },
+            label = { Text("Height (cm)") },
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
+        )
+
+        Spacer(Modifier.height(24.dp))
 
         Button(
             modifier = Modifier.fillMaxWidth().height(52.dp),
@@ -89,17 +105,22 @@ fun OnboardingScreen(
                 val c = current.toDoubleOrNull()
                 val t = target.toDoubleOrNull()
                 val a = age.toIntOrNull()?.takeIf { it in 5..120 }
+                val h = height.toIntOrNull()?.takeIf { it in 50..250 } // 简单的范围校验
+
                 vm.updateProfile(
                     currentWeightKg = c,
                     targetWeightKg = t,
                     activityLevel = activity,
                     foodPreference = pref,
                     sex = sex,
-                    ageYears = a
+                    ageYears = a,
+                    heightCm = h // [新增]
                 )
                 onContinue()
             }
         ) { Text(stringResource(R.string.continue_btn)) }
+
+        Spacer(Modifier.height(32.dp))
     }
 }
 

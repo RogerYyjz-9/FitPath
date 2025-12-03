@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/domain/plan/PlanModels.kt
+// File: app/src/main/java/com/example/fitpath/domain/plan/PlanModels.kt
 package com.example.fitpath.domain.plan
 
 data class Range(val min: Int, val max: Int) {

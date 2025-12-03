@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/ui/theme/Theme.kt
+// File: app/src/main/java/com/example/fitpath/ui/theme/Theme.kt
 package com.example.fitpath.ui.theme
 
 import android.os.Build

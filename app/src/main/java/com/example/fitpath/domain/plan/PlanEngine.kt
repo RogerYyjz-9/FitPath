@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/domain/plan/PlanEngine.kt
+// File: app/src/main/java/com/example/fitpath/domain/plan/PlanEngine.kt
 package com.example.fitpath.domain.plan
 
 import com.example.fitpath.domain.model.ActivityLevel

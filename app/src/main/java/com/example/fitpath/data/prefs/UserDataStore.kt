@@ -30,6 +30,13 @@ class UserDataStore(private val context: Context) {
         val SEX = stringPreferencesKey("sex")
         val AGE = intPreferencesKey("age")
         val AGE_SET = booleanPreferencesKey("age_set")
+        val HEIGHT = intPreferencesKey("height_cm")
+
+        // [新增] 计步器相关配置
+        val STEPS_ENABLED = booleanPreferencesKey("steps_enabled")
+        val STEPS_BASELINE_TOTAL = longPreferencesKey("steps_baseline_total")
+        val STEPS_BASELINE_DAY = longPreferencesKey("steps_baseline_day")
+        val DAILY_STEP_GOAL = intPreferencesKey("daily_step_goal")
     }
 
     fun prefsFlow(): Flow<PrefsSnapshot> = DS.data.map { p ->
@@ -44,11 +51,17 @@ class UserDataStore(private val context: Context) {
             activityLevel = p[Keys.ACTIVITY]?.let { runCatching { ActivityLevel.valueOf(it) }.getOrNull() } ?: ActivityLevel.MODERATE,
             foodPreference = p[Keys.PREF]?.let { runCatching { FoodPreference.valueOf(it) }.getOrNull() } ?: FoodPreference.NONE,
             sex = p[Keys.SEX]?.let { runCatching { Sex.valueOf(it) }.getOrNull() } ?: Sex.UNSPECIFIED,
-            ageYears = if (p[Keys.AGE_SET] == true) p[Keys.AGE] else null
+            ageYears = if (p[Keys.AGE_SET] == true) p[Keys.AGE] else null,
+            heightCm = p[Keys.HEIGHT],
+
+            // [新增] 读取计步器配置
+            stepsEnabled = p[Keys.STEPS_ENABLED] ?: false,
+            stepsBaselineTotal = p[Keys.STEPS_BASELINE_TOTAL] ?: 0L,
+            stepsBaselineEpochDay = p[Keys.STEPS_BASELINE_DAY] ?: 0L,
+            dailyStepGoal = p[Keys.DAILY_STEP_GOAL] ?: 6000
         )
     }
 
-    // ✅ 关键：用 block body，返回 Unit
     suspend fun setTheme(mode: ThemeMode) {
         DS.edit { it[Keys.THEME] = mode.name }
     }
@@ -71,7 +84,8 @@ class UserDataStore(private val context: Context) {
         activityLevel: ActivityLevel,
         foodPreference: FoodPreference,
         sex: Sex,
-        ageYears: Int?
+        ageYears: Int?,
+        heightCm: Int?
     ) {
         DS.edit { p ->
             if (currentWeightKg != null) p[Keys.CURRENT_W] = currentWeightKg else p.remove(Keys.CURRENT_W)
@@ -86,7 +100,24 @@ class UserDataStore(private val context: Context) {
                 p.remove(Keys.AGE)
                 p[Keys.AGE_SET] = false
             }
+            if (heightCm != null) p[Keys.HEIGHT] = heightCm else p.remove(Keys.HEIGHT)
         }
+    }
+
+    // [新增] 计步器设置方法
+    suspend fun setStepsEnabled(enabled: Boolean) {
+        DS.edit { it[Keys.STEPS_ENABLED] = enabled }
+    }
+
+    suspend fun setStepsBaseline(total: Long, epochDay: Long) {
+        DS.edit {
+            it[Keys.STEPS_BASELINE_TOTAL] = total
+            it[Keys.STEPS_BASELINE_DAY] = epochDay
+        }
+    }
+
+    suspend fun setDailyStepGoal(goal: Int) {
+        DS.edit { it[Keys.DAILY_STEP_GOAL] = goal }
     }
 
     suspend fun clearAll() {
@@ -105,5 +136,12 @@ data class PrefsSnapshot(
     val activityLevel: ActivityLevel,
     val foodPreference: FoodPreference,
     val sex: Sex,
-    val ageYears: Int?
+    val ageYears: Int?,
+    val heightCm: Int?,
+
+    // [新增]
+    val stepsEnabled: Boolean,
+    val stepsBaselineTotal: Long,
+    val stepsBaselineEpochDay: Long,
+    val dailyStepGoal: Int
 )

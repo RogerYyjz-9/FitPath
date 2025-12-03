@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/ui/nav/FitPathNavGraph.kt
+// File: app/src/main/java/com/example/fitpath/ui/nav/FitPathNavGraph.kt
 package com.example.fitpath.ui.nav
 
 import androidx.compose.runtime.Composable

@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/FitPathApplication.kt
+// File: app/src/main/java/com/example/fitpath/FitPathApplication.kt
 package com.example.fitpath
 
 import android.app.Application

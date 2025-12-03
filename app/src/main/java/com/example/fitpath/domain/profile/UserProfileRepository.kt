@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/domain/profile/UserProfileRepository.kt
+// File: app/src/main/java/com/example/fitpath/domain/profile/UserProfileRepository.kt
 package com.example.fitpath.domain.profile
 
 import com.example.fitpath.domain.model.ActivityLevel
@@ -13,6 +13,7 @@ data class UserProfile(
     val foodPreference: FoodPreference = FoodPreference.NONE,
     val sex: Sex = Sex.UNSPECIFIED,
     val ageYears: Int? = null,
+    val heightCm: Int? = null // [新增]
 ) {
     fun isReadyForPlan(): Boolean =
         (currentWeightKg != null && currentWeightKg > 0.0) &&

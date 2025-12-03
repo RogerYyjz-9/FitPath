@@ -1,17 +1,13 @@
 // File: app/src/main/java/com/example/fitpath/data/db/WeightDao.kt
 package com.example.fitpath.data.db
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
-import androidx.room.Transaction
-import androidx.room.Update
+import androidx.room.*
 import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface WeightDao {
 
+    // 恢复原有的方法名 observeAll 和正确的表名 weight_entries
     @Query("SELECT * FROM weight_entries ORDER BY dateEpochDay DESC")
     fun observeAll(): Flow<List<WeightEntry>>
 
@@ -27,15 +23,20 @@ interface WeightDao {
     @Update
     suspend fun update(entry: WeightEntry)
 
+    // 恢复 deleteById
     @Query("DELETE FROM weight_entries WHERE id = :id")
     suspend fun deleteById(id: Long)
 
+    // 恢复 clear
     @Query("DELETE FROM weight_entries")
     suspend fun clear()
 
+    // [保留] 批量插入，供数据库预填充使用
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(entries: List<WeightEntry>)
+
     /**
-     * "One day one row": insert if absent, otherwise overwrite weight for that day.
-     * Uses a single transaction to avoid race conditions.
+     * 恢复 upsertByDate 逻辑，WeightRepositoryImpl 依赖此方法
      */
     @Transaction
     suspend fun upsertByDate(dateEpochDay: Long, weightKg: Double) {

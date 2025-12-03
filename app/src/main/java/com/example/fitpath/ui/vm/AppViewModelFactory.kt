@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/ui/vm/AppViewModelFactory.kt
+// File: app/src/main/java/com/example/fitpath/ui/vm/AppViewModelFactory.kt
 package com.example.fitpath.ui.vm
 
 import androidx.lifecycle.ViewModel

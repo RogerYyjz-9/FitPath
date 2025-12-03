@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/data/repo/UserPrefsRepositoryImpl.kt
+// File: app/src/main/java/com/example/fitpath/data/repo/UserPrefsRepositoryImpl.kt
 package com.example.fitpath.data.repo
 
 import com.example.fitpath.data.prefs.UserDataStore
@@ -29,7 +29,13 @@ class UserPrefsRepositoryImpl(
                     themeMode = snap.themeMode,
                     languageMode = snap.languageMode,
                     reminderEnabled = snap.reminderEnabled,
-                    onboardingCompleted = snap.onboardingCompleted
+                    onboardingCompleted = snap.onboardingCompleted,
+
+                    // [新增] 映射字段
+                    stepsEnabled = snap.stepsEnabled,
+                    stepsBaselineTotal = snap.stepsBaselineTotal,
+                    stepsBaselineEpochDay = snap.stepsBaselineEpochDay,
+                    dailyStepGoal = snap.dailyStepGoal
                 )
             }
             .launchIn(scope)
@@ -39,5 +45,11 @@ class UserPrefsRepositoryImpl(
     override suspend fun setLanguageMode(mode: LanguageMode) = store.setLanguage(mode)
     override suspend fun setReminderEnabled(enabled: Boolean) = store.setReminder(enabled)
     override suspend fun setOnboardingCompleted(completed: Boolean) = store.setOnboardingCompleted(completed)
+
+    // [新增] 实现计步器方法
+    override suspend fun setStepsEnabled(enabled: Boolean) = store.setStepsEnabled(enabled)
+    override suspend fun setStepsBaseline(total: Long, epochDay: Long) = store.setStepsBaseline(total, epochDay)
+    override suspend fun setDailyStepGoal(goal: Int) = store.setDailyStepGoal(goal)
+
     override suspend fun clearAll() = store.clearAll()
 }

@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/work/ReminderScheduler.kt
+// File: app/src/main/java/com/example/fitpath/work/ReminderScheduler.kt
 package com.example.fitpath.work
 
 import android.content.Context

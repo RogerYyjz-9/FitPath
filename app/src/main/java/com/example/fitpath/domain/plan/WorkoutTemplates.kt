@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/domain/plan/WorkoutTemplates.kt
+// File: app/src/main/java/com/example/fitpath/domain/plan/WorkoutTemplates.kt
 package com.example.fitpath.domain.plan
 
 data class WorkoutTemplate(

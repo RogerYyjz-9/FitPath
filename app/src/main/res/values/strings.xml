@@ -45,6 +45,7 @@
     <string name="last_7_days">Last 7 days</string>
     <string name="last_30_days">Last 30 days</string>
 
+
     <string name="settings_title">Settings</string>
     <string name="theme">Theme</string>
     <string name="theme_system">System</string>
@@ -82,4 +83,30 @@
     <string name="pref_no_beef">No beef</string>
     <string name="pref_no_pork">No pork</string>
     <string name="pref_high_protein">High protein</string>
+
+    <string name="weight_log_empty">No entries yet.</string>
+    <string name="weight_future_error">Date cannot be in the future.</string>
+    <string name="weight_range_error">Range: 20–400 kg</string>
+    <string name="trends_not_enough">Add at least two entries to see your curve.</string>
+    <string name="trends_hint_moving_avg">Moving average smooths daily fluctuations.</string>
+    <string name="legend_actual">Actual</string>
+    <string name="legend_average">7-day avg</string>
+    <string name="legend_target">Target</string>
+
+    <string name="action_quick_add">Quick add</string>
+    <string name="add_weight_action">Add weight</string>
+    <string name="add_weight_action_desc">Log today’s weight without leaving this page.</string>
+    <string name="show_meals">Show meals</string>
+    <string name="show_meals_desc">Jump to today’s meal plan.</string>
+    <string name="open_weight_log">Open weight log</string>
+    <string name="open_weight_log_desc">Review or edit past entries.</string>
+    <string name="edit_profile_action">Edit profile</string>
+    <string name="edit_profile_desc">Update goals and preferences.</string>
+    <string name="onboarding_needed">Complete onboarding to generate your plan.</string>
+    <string name="steps_title">Steps</string>
+    <string name="steps_permission_needed">Enable step counting to see today’s progress.</string>
+    <string name="steps_enable">Enable steps</string>
+    <string name="steps_not_supported">This device does not support step counting.</string>
+    <string name="steps_loading">Reading steps…</string>
+    <string name="steps_progress">%1$d / %2$d steps</string>
 </resources>

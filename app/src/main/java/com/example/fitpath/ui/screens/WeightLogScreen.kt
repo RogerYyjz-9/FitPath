@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/ui/screens/WeightLogScreen.kt
+// File: app/src/main/java/com/example/fitpath/ui/screens/WeightLogScreen.kt
 @file:OptIn(androidx.compose.material3.ExperimentalMaterial3Api::class)
 
 package com.example.fitpath.ui.screens
@@ -9,7 +9,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.example.fitpath.R
@@ -23,6 +26,8 @@ import java.time.format.DateTimeFormatter
 @Composable
 fun WeightLogScreen(vm: AppViewModel) {
     val ui by vm.ui.collectAsState()
+    // [新增] 获取 Profile 以拿到身高
+    val profile by vm.profile.collectAsState()
 
     var showDialog by remember { mutableStateOf(false) }
     var editing by remember { mutableStateOf<WeightEntryModel?>(null) }
@@ -45,6 +50,7 @@ fun WeightLogScreen(vm: AppViewModel) {
                 items(ui.weightEntries, key = { it.id }) { e ->
                     WeightRow(
                         entry = e,
+                        heightCm = profile.heightCm, // [新增] 传入身高
                         onEdit = { editing = e; showDialog = true },
                         onDelete = { vm.deleteWeight(e.id) }
                     )
@@ -70,15 +76,54 @@ fun WeightLogScreen(vm: AppViewModel) {
 }
 
 @Composable
-private fun WeightRow(entry: WeightEntryModel, onEdit: () -> Unit, onDelete: () -> Unit) {
+private fun WeightRow(
+    entry: WeightEntryModel,
+    heightCm: Int?,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit
+) {
+    // [新增] 计算 BMI
+    val bmi = remember(entry.weightKg, heightCm) {
+        if (heightCm != null && heightCm > 0) {
+            val hM = heightCm / 100.0
+            entry.weightKg / (hM * hM)
+        } else null
+    }
+
+    // [新增] 根据 BMI 选择 Icon 资源
+    val iconRes = when {
+        bmi == null -> null
+        bmi < 18.5 -> R.drawable.ic_bmi_under
+        bmi < 25.0 -> R.drawable.ic_bmi_normal
+        bmi < 30.0 -> R.drawable.ic_bmi_over
+        else -> R.drawable.ic_bmi_obese
+    }
+
     Card(Modifier.fillMaxWidth()) {
         Row(
             modifier = Modifier.padding(16.dp).fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Column {
-                Text(entry.date.toString(), style = MaterialTheme.typography.titleSmall)
-                Text("${"%.1f".format(entry.weightKg)} kg", style = MaterialTheme.typography.bodyMedium)
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                // [新增] 显示 BMI Icon
+                if (iconRes != null) {
+                    Icon(
+                        painter = painterResource(id = iconRes),
+                        contentDescription = "BMI Status",
+                        modifier = Modifier.size(32.dp),
+                        tint = Color.Unspecified
+                    )
+                    Spacer(Modifier.width(16.dp))
+                }
+
+                Column {
+                    Text(entry.date.toString(), style = MaterialTheme.typography.titleSmall)
+                    Text("${"%.1f".format(entry.weightKg)} kg", style = MaterialTheme.typography.bodyMedium)
+                    if (bmi != null) {
+                        Text("BMI: ${"%.1f".format(bmi)}", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.outline)
+                    }
+                }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(onClick = onEdit) { Text(stringResource(R.string.edit)) }
@@ -113,7 +158,7 @@ private fun WeightEntryDialog(
             selectableDates = object : SelectableDates {
                 override fun isSelectableDate(utcTimeMillis: Long): Boolean {
                     val d = Instant.ofEpochMilli(utcTimeMillis).atZone(zoneId).toLocalDate()
-                    return !d.isAfter(today) // 禁选未来
+                    return !d.isAfter(today)
                 }
             }
         )
@@ -152,8 +197,6 @@ private fun WeightEntryDialog(
         title = { Text(stringResource(R.string.add_entry)) },
         text = {
             Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-
-                // ✅ 日历选择日期（替代手输）
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween

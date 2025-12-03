@@ -1,4 +1,4 @@
-// File: app/src/main/java/com/fitpath/ui/nav/Routes.kt
+// File: app/src/main/java/com/example/fitpath/ui/nav/Routes.kt
 package com.example.fitpath.ui.nav
 
 sealed class Route(val path: String) {
