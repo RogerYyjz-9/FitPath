@@ -7,6 +7,7 @@ import com.example.fitpath.data.prefs.UserDataStore
 import com.example.fitpath.data.repo.UserPrefsRepositoryImpl
 import com.example.fitpath.data.repo.UserProfileRepositoryImpl
 import com.example.fitpath.data.repo.WeightRepositoryImpl
+import com.example.fitpath.data.steps.StepCounterManager
 import com.example.fitpath.domain.prefs.UserPrefsRepository
 import com.example.fitpath.domain.profile.UserProfileRepository
 import com.example.fitpath.domain.weight.WeightRepository
@@ -19,6 +20,7 @@ class AppContainer(appContext: Context) {
     val userPrefsRepository: UserPrefsRepository = UserPrefsRepositoryImpl(dataStore)
     val userProfileRepository: UserProfileRepository = UserProfileRepositoryImpl(dataStore)
     val weightRepository: WeightRepository = WeightRepositoryImpl(database.weightDao())
+    val stepCounterManager: StepCounterManager = StepCounterManager(appContext)
 
     val reminderScheduler: ReminderScheduler = ReminderScheduler(appContext)
 }

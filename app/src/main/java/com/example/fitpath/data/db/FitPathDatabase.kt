@@ -10,7 +10,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 
 @Database(
     entities = [WeightEntry::class],
-    version = 2,
+    version = 3,
     exportSchema = true
 )
 abstract class FitPathDatabase : RoomDatabase() {
@@ -21,9 +21,8 @@ abstract class FitPathDatabase : RoomDatabase() {
         fun build(context: Context): FitPathDatabase =
             Room.databaseBuilder(context, FitPathDatabase::class.java, "fitpath.db")
                 // v1 -> v2: enforce "one row per day"
-                .addMigrations(MIGRATION_1_2)
-                // dev 阶段保底：如果有人本地库版本乱了，至少能跑起来（会清库重建）
-                .fallbackToDestructiveMigration()
+                // v2 -> v3: deduplicate again and keep UNIQUE index without destructive fallback
+                .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
                 .build()
     }
 }
@@ -34,6 +33,28 @@ abstract class FitPathDatabase : RoomDatabase() {
  * 2) Create UNIQUE index on dateEpochDay.
  */
 private val MIGRATION_1_2 = object : Migration(1, 2) {
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL(
+            """
+            DELETE FROM weight_entries
+            WHERE id NOT IN (
+              SELECT MAX(id) FROM weight_entries GROUP BY dateEpochDay
+            )
+            """.trimIndent()
+        )
+        db.execSQL(
+            """
+            CREATE UNIQUE INDEX IF NOT EXISTS index_weight_entries_dateEpochDay
+            ON weight_entries(dateEpochDay)
+            """.trimIndent()
+        )
+    }
+}
+
+/**
+ * Migration 2->3: ensure UNIQUE constraint holds without destructive migration.
+ */
+private val MIGRATION_2_3 = object : Migration(2, 3) {
     override fun migrate(db: SupportSQLiteDatabase) {
         db.execSQL(
             """

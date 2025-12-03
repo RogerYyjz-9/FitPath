@@ -23,6 +23,11 @@ class UserDataStore(private val context: Context) {
         val REMINDER = booleanPreferencesKey("reminder")
         val ONBOARDING_DONE = booleanPreferencesKey("onboarding_done")
 
+        val STEPS_ENABLED = booleanPreferencesKey("steps_enabled")
+        val STEPS_BASELINE_TOTAL = longPreferencesKey("steps_baseline_total")
+        val STEPS_BASELINE_EPOCH_DAY = longPreferencesKey("steps_baseline_epoch_day")
+        val DAILY_STEP_GOAL = intPreferencesKey("daily_step_goal")
+
         val CURRENT_W = doublePreferencesKey("current_w")
         val TARGET_W = doublePreferencesKey("target_w")
         val ACTIVITY = stringPreferencesKey("activity")
@@ -38,6 +43,10 @@ class UserDataStore(private val context: Context) {
             languageMode = p[Keys.LANG]?.let { runCatching { LanguageMode.valueOf(it) }.getOrNull() } ?: LanguageMode.SYSTEM,
             reminderEnabled = p[Keys.REMINDER] ?: false,
             onboardingCompleted = p[Keys.ONBOARDING_DONE] ?: false,
+            stepsEnabled = p[Keys.STEPS_ENABLED] ?: false,
+            stepsBaselineTotal = p[Keys.STEPS_BASELINE_TOTAL] ?: 0L,
+            stepsBaselineEpochDay = p[Keys.STEPS_BASELINE_EPOCH_DAY] ?: -1L,
+            dailyStepGoal = p[Keys.DAILY_STEP_GOAL] ?: 8000,
 
             currentWeightKg = p[Keys.CURRENT_W],
             targetWeightKg = p[Keys.TARGET_W],
@@ -63,6 +72,21 @@ class UserDataStore(private val context: Context) {
 
     suspend fun setOnboardingCompleted(done: Boolean) {
         DS.edit { it[Keys.ONBOARDING_DONE] = done }
+    }
+
+    suspend fun setStepsEnabled(enabled: Boolean) {
+        DS.edit { it[Keys.STEPS_ENABLED] = enabled }
+    }
+
+    suspend fun setStepsBaseline(total: Long, epochDay: Long) {
+        DS.edit {
+            it[Keys.STEPS_BASELINE_TOTAL] = total
+            it[Keys.STEPS_BASELINE_EPOCH_DAY] = epochDay
+        }
+    }
+
+    suspend fun setDailyStepGoal(goal: Int) {
+        DS.edit { it[Keys.DAILY_STEP_GOAL] = goal }
     }
 
     suspend fun setProfile(
@@ -99,6 +123,10 @@ data class PrefsSnapshot(
     val languageMode: LanguageMode,
     val reminderEnabled: Boolean,
     val onboardingCompleted: Boolean,
+    val stepsEnabled: Boolean,
+    val stepsBaselineTotal: Long,
+    val stepsBaselineEpochDay: Long,
+    val dailyStepGoal: Int,
 
     val currentWeightKg: Double?,
     val targetWeightKg: Double?,

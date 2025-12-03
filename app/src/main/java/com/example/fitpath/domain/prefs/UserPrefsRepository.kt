@@ -10,6 +10,10 @@ data class UserPrefs(
     val languageMode: LanguageMode = LanguageMode.SYSTEM,
     val reminderEnabled: Boolean = false,
     val onboardingCompleted: Boolean = false,
+    val stepsEnabled: Boolean = false,
+    val stepsBaselineTotal: Long = 0L,
+    val stepsBaselineEpochDay: Long = -1L,
+    val dailyStepGoal: Int = 8000,
 )
 
 interface UserPrefsRepository {
@@ -18,5 +22,8 @@ interface UserPrefsRepository {
     suspend fun setLanguageMode(mode: LanguageMode)
     suspend fun setReminderEnabled(enabled: Boolean)
     suspend fun setOnboardingCompleted(completed: Boolean)
+    suspend fun setStepsEnabled(enabled: Boolean)
+    suspend fun setStepsBaseline(total: Long, epochDay: Long)
+    suspend fun setDailyStepGoal(goal: Int)
     suspend fun clearAll()
 }
