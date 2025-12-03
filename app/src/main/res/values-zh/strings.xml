@@ -34,16 +34,34 @@
 
     <string name="weight_log_title">体重记录</string>
     <string name="add_entry">新增记录</string>
+    <string name="weight_log_empty">还没有记录。</string>
     <string name="date">日期</string>
     <string name="weight_kg">体重（kg）</string>
     <string name="save">保存</string>
     <string name="cancel">取消</string>
+    <string name="weight_future_error">日期不能晚于今天。</string>
+    <string name="weight_range_error">范围：20–400 kg</string>
     <string name="delete">删除</string>
     <string name="edit">编辑</string>
 
     <string name="trends_title">趋势</string>
     <string name="last_7_days">近 7 天</string>
     <string name="last_30_days">近 30 天</string>
+    <string name="trends_not_enough">至少新增两条体重记录后才会显示曲线。</string>
+    <string name="trends_hint_moving_avg">7 日均线用于平滑每日波动。</string>
+    <string name="legend_actual">实际体重</string>
+    <string name="legend_average">7 日均线</string>
+    <string name="legend_target">目标体重</string>
+
+    <string name="action_quick_add">快速添加</string>
+    <string name="add_weight_action">记录体重</string>
+    <string name="add_weight_action_desc">不用离开当前页，直接记录今天的体重。</string>
+    <string name="show_meals">查看今日饮食</string>
+    <string name="show_meals_desc">滚动到今日餐单位置。</string>
+    <string name="open_weight_log">打开体重记录</string>
+    <string name="open_weight_log_desc">查看或编辑历史记录。</string>
+    <string name="edit_profile_action">编辑资料</string>
+    <string name="edit_profile_desc">更新目标和偏好设置。</string>
 
     <string name="settings_title">设置</string>
     <string name="theme">主题</string>
@@ -65,6 +83,7 @@
     <string name="ok">确定</string>
 
     <string name="error_invalid_input">无法为这些输入生成安全计划，请调整目标或咨询专业人士。</string>
+    <string name="onboarding_needed">完成引导后才能生成今日计划。</string>
 
     <string name="sex_unspecified">不填写</string>
     <string name="sex_male">男</string>
@@ -82,4 +101,11 @@
     <string name="pref_no_beef">不吃牛</string>
     <string name="pref_no_pork">不吃猪</string>
     <string name="pref_high_protein">高蛋白</string>
+
+    <string name="steps_title">步数</string>
+    <string name="steps_permission_needed">开启计步后即可查看今天的进度。</string>
+    <string name="steps_enable">启用步数</string>
+    <string name="steps_not_supported">设备不支持计步传感器。</string>
+    <string name="steps_loading">正在读取步数…</string>
+    <string name="steps_progress">%1$d / %2$d 步</string>
 </resources>

@@ -29,7 +29,11 @@ class UserPrefsRepositoryImpl(
                     themeMode = snap.themeMode,
                     languageMode = snap.languageMode,
                     reminderEnabled = snap.reminderEnabled,
-                    onboardingCompleted = snap.onboardingCompleted
+                    onboardingCompleted = snap.onboardingCompleted,
+                    stepsEnabled = snap.stepsEnabled,
+                    stepsBaselineTotal = snap.stepsBaselineTotal,
+                    stepsBaselineEpochDay = snap.stepsBaselineEpochDay,
+                    dailyStepGoal = snap.dailyStepGoal
                 )
             }
             .launchIn(scope)
@@ -39,5 +43,8 @@ class UserPrefsRepositoryImpl(
     override suspend fun setLanguageMode(mode: LanguageMode) = store.setLanguage(mode)
     override suspend fun setReminderEnabled(enabled: Boolean) = store.setReminder(enabled)
     override suspend fun setOnboardingCompleted(completed: Boolean) = store.setOnboardingCompleted(completed)
+    override suspend fun setStepsEnabled(enabled: Boolean) = store.setStepsEnabled(enabled)
+    override suspend fun setStepsBaseline(total: Long, epochDay: Long) = store.setStepsBaseline(total, epochDay)
+    override suspend fun setDailyStepGoal(goal: Int) = store.setDailyStepGoal(goal)
     override suspend fun clearAll() = store.clearAll()
 }
